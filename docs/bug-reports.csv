@@ -1,0 +1,9 @@
+Bug ID,Date Reported,Environment,Severity,Status,Title,Description,Steps to Reproduce,Expected Result,Actual Result,Screenshots/Videos
+BUG-001,2025-03-04,Production,Low,Open,Login error message alignment,The error message for invalid login is not properly aligned with the input fields,1. Go to https://www.saucedemo.com/
+2. Enter invalid credentials
+3. Click Login button,Error message should be aligned with input fields and have consistent padding,Error message appears too close to the input field with inconsistent padding,N/A
+BUG-002,2025-03-04,Production,Medium,Open,Cart item count persistence,Cart item count doesn't persist after page refresh,1. Add items to cart
+2. Refresh the page,Cart item count should persist after page refresh,Cart item count resets to 0 after refresh,N/A
+BUG-003,2025-03-04,Production,Low,Open,Product sorting reset,Product sorting resets when navigating back from product details,1. Sort products by price
+2. Click on a product
+3. Click back button,Product sorting should remain as selected,Products revert to default sorting,N/A
