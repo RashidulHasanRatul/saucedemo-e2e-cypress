@@ -25,20 +25,17 @@ module.exports = defineConfig({
   // Reporter configuration for Mochawesome
   reporter: "cypress-mochawesome-reporter",
   reporterOptions: {
-    reportDir: "cypress/reports/saucedemo-ui-tests-report", // Custom report directory
-    overwrite: false, // Prevent overwriting previous reports
-    html: true, // Generate HTML report
-    json: true, // Generate JSON report
-    charts: true, // Enable charts in the report
+    reportDir: "cypress/reports/mochawesome-report",
+    overwrite: true,
+    html: true,
+    json: true,
+    timestamp: "mmddyyyy_HHMMss",
+    charts: true,
+    reportPageTitle: "SauceDemo Test Report",
     embeddedScreenshots: true,
-    inclineAssets: true,
-    autoOpen: false,
-    code: true,
-    showPassed: true,
+    inlineAssets: true,
     saveAllAttempts: false,
-    reportPageTitle: "SauceDemo Test Report", // Custom title
-    reportFilename: "saucedemo-report", // Custom report file name
-    timestamp: "longDate" // Append timestamp to avoid overwrites
+    quiet: true
   },
 
   // Configure Cypress E2E tests

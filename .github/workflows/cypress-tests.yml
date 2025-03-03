@@ -38,14 +38,22 @@ jobs:
           browser: chrome
           headed: false
           record: false
+          config: video=true,screenshotOnRunFailure=true
         env:
           ENV: ${{ matrix.environment }}
           # Add any other environment-specific variables here
           CYPRESS_BASE_URL: ${{ matrix.environment == 'prod' && 'https://www.saucedemo.com' || 'https://dev.saucedemo.com' }}
 
-      - name: Generate test report
+      - name: Create Mochawesome report directory
         if: always()
-        run: npx mochawesome-merge cypress/reports/**/*.json > cypress/reports/full-report.json
+        run: |
+          mkdir -p cypress/reports/mochawesome-report
+          
+      - name: Generate Mochawesome report
+        if: always()
+        run: |
+          [ -d cypress/reports/mochawesome-report ] && find cypress/reports/mochawesome-report -name '*.json' -exec cat {} \; > cypress/reports/mochawesome-merged.json || echo "No report files found"
+          npx mochawesome-merge cypress/reports/mochawesome-report/*.json -o cypress/reports/full-report.json || echo "Failed to merge reports, possibly no test results"
 
       - name: Upload test results
         if: always()
