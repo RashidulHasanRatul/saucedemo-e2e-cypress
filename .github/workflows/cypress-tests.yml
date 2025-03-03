@@ -59,7 +59,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-results-${{ matrix.environment }}
+          name: cypress-results-${{ matrix.environment }}-${{ github.run_number }}-${{ github.run_attempt }}
           path: |
             cypress/reports
             cypress/screenshots
@@ -70,6 +70,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bug-reports
+          name: bug-reports-${{ github.run_number }}-${{ github.run_attempt }}
           path: docs/bug-reports.csv
           retention-days: 30
