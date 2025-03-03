@@ -55,21 +55,27 @@ jobs:
           [ -d cypress/reports/mochawesome-report ] && find cypress/reports/mochawesome-report -name '*.json' -exec cat {} \; > cypress/reports/mochawesome-merged.json || echo "No report files found"
           npx mochawesome-merge cypress/reports/mochawesome-report/*.json -o cypress/reports/full-report.json || echo "Failed to merge reports, possibly no test results"
 
+      - name: Get timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +%Y%m%d_%H%M%S)" >> $GITHUB_OUTPUT
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-results-${{ matrix.environment }}-${{ github.run_number }}-${{ github.run_attempt }}
+          name: cypress-results-${{ matrix.environment }}-${{ steps.timestamp.outputs.timestamp }}
           path: |
             cypress/reports
             cypress/screenshots
             cypress/videos
           retention-days: 30
+          if-no-files-found: warn
 
       - name: Upload bug reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bug-reports-${{ github.run_number }}-${{ github.run_attempt }}
+          name: bug-reports-${{ steps.timestamp.outputs.timestamp }}
           path: docs/bug-reports.csv
           retention-days: 30
+          if-no-files-found: warn
