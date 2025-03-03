@@ -55,26 +55,30 @@ jobs:
           [ -d cypress/reports/mochawesome-report ] && find cypress/reports/mochawesome-report -name '*.json' -exec cat {} \; > cypress/reports/mochawesome-merged.json || echo "No report files found"
           npx mochawesome-merge cypress/reports/mochawesome-report/*.json -o cypress/reports/full-report.json || echo "Failed to merge reports, possibly no test results"
 
-      - name: Get timestamp
-        id: timestamp
-        run: echo "timestamp=$(date +%Y%m%d_%H%M%S)" >> $GITHUB_OUTPUT
+      - name: Generate unique identifier
+        id: uniqid
+        run: |
+          echo "timestamp=$(date +%Y%m%d_%H%M%S)" >> $GITHUB_OUTPUT
+          echo "random=$(openssl rand -hex 4)" >> $GITHUB_OUTPUT
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-results-${{ matrix.environment }}-${{ steps.timestamp.outputs.timestamp }}
+          name: cypress-results-${{ matrix.environment }}-${{ steps.uniqid.outputs.timestamp }}-${{ steps.uniqid.outputs.random }}
           path: |
             cypress/reports
             cypress/screenshots
           retention-days: 30
           if-no-files-found: warn
+          overwrite: true
 
       - name: Upload bug reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bug-reports-${{ steps.timestamp.outputs.timestamp }}
+          name: bug-reports-${{ steps.uniqid.outputs.timestamp }}-${{ steps.uniqid.outputs.random }}
           path: docs/bug-reports.csv
           retention-days: 30
           if-no-files-found: warn
+          overwrite: true
