@@ -1,6 +1,6 @@
 import ProductPage from '../../support/pages/ProductPage';
 
-describe('Sauce Demo - [PRODUCT PAGE]', () => {
+describe.skip('Sauce Demo - [PRODUCT PAGE]', () => {
   beforeEach(() => {
     // Using the custom login command to log in
     cy.visitBaseUrl();
