@@ -38,7 +38,7 @@ jobs:
           browser: chrome
           headed: false
           record: false
-          config: video=true,screenshotOnRunFailure=true
+          config: video=false,screenshotOnRunFailure=true
         env:
           ENV: ${{ matrix.environment }}
           # Add any other environment-specific variables here
@@ -67,7 +67,6 @@ jobs:
           path: |
             cypress/reports
             cypress/screenshots
-            cypress/videos
           retention-days: 30
           if-no-files-found: warn
 

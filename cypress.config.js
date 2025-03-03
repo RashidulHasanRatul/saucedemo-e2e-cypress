@@ -18,9 +18,9 @@ module.exports = defineConfig({
   // Set retries to 1 for failed test cases
   retries: 1,
 
-  // Video settings
-  video: true,
-  videoCompression: true,
+  // Screenshot and video settings
+  video: false,
+  screenshotOnRunFailure: true,
 
   // Reporter configuration for Mochawesome
   reporter: "cypress-mochawesome-reporter",
